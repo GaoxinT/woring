@@ -4,6 +4,8 @@ package com.gx.woring.util;
  * Created by Woring on 18-10-26.
  */
 
+import android.util.Log;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,10 +15,17 @@ import java.sql.Statement;
 public class MySqlUtil {
 
 
-    private static final String URL = "jdbc:mysql://183.215.2.237:24865/mydb";
+    private static final String URL = "jdbc:mysql://183.215.2.237:50890/woring";
     private static final String USER = "root";
     private static final String PASSWORD = "qqwq1121";
 
+    /**
+     * 选择连接数据库
+     * @param url
+     * @param user
+     * @param password
+     * @return
+     */
     public static Connection openConnection(String url, String user, String password) {
         Connection conn = null;
         try {
@@ -26,12 +35,17 @@ public class MySqlUtil {
         } catch (ClassNotFoundException e) {
             conn = null;
         } catch (SQLException e) {
+            e.printStackTrace();
             conn = null;
         }
 
         return conn;
     }
 
+    /**
+     * 直接连接数据库
+     * @return
+     */
     public static Connection openConnectionByStatic() {
         Connection conn = null;
         try {
@@ -47,6 +61,11 @@ public class MySqlUtil {
         return conn;
     }
 
+    /**
+     * 查询
+     * @param conn
+     * @param sql
+     */
     public static void query(Connection conn, String sql) {
 
         if (conn == null) {
@@ -103,6 +122,28 @@ public class MySqlUtil {
             }
         } catch (SQLException e) {
             execResult = false;
+        }
+
+        return execResult;
+    }
+
+    public static boolean execSQLNew(String sql) {
+        boolean execResult = false;
+        Connection conn = openConnection(URL, USER, PASSWORD);
+        if (conn == null) {
+            return execResult;
+        }
+
+        Statement statement = null;
+
+        try {
+            statement = conn.createStatement();
+            if (statement != null) {
+                execResult = statement.execute(sql);
+            }
+        } catch (SQLException e) {
+            execResult = false;
+            Log.d("-------------",e.getMessage());
         }
 
         return execResult;
