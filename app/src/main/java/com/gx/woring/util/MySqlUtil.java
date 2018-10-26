@@ -14,10 +14,11 @@ import java.sql.Statement;
 
 public class MySqlUtil {
 
-
-    private static final String URL = "jdbc:mysql://183.215.2.237:50890/woring";
     private static final String USER = "root";
+    private static final String URL = "jdbc:mysql://183.215.2.237:50890/woring";
     private static final String PASSWORD = "qqwq1121";
+    //private static final String URL = "jdbc:mysql://192.168.0.249:3306/test";
+    //private static final String PASSWORD = "root";
 
     /**
      * 选择连接数据库
